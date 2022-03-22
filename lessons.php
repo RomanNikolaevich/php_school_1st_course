@@ -474,6 +474,8 @@ $tags = 'php mysql array variable';
 $tags_array = explode(' ', $tags); //преобразовываем набор слов в массив
 echo '<pre>';
 print_r($tags_array); // выдает на экран массивом эти данные
+
+
 ?>
 
 
