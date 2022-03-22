@@ -1,0 +1,9 @@
+.idea/
+1.html
+1.txt
+2.txt
+hwork.php
+hwork3.php
+hwork3-old.php
+index-text.php
+
