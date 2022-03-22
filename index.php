@@ -35,22 +35,7 @@ header('Content-Type: text/html; charset=utf-8');
 
 <?php
 
-$country = [
-	'Russia',
-	'Ukraine',
-	'Israel',
-];
-$countries = implode (  ', ', $country);
-
 ?>
-	<p> Мы работаем со странами: <?=$countries;?>.</p>
-
-	<?php
-	$tags = 'php mysql array variable';
-	$tags_array = explode(' ', $tags);
-	echo '<pre>';
-	print_r($tags_array);
-	?>
 
 
 </div>
