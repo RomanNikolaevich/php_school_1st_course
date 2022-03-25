@@ -27,17 +27,14 @@ $str3 = '1между1';
 $int3 = (int) $str3;
 var_dump($int3);
 
-$str4 = 'сумма1int';
+$str4 = 'сумма11';
 $int4 = (int) $str4;
 var_dump($int4);
 
-$str5 = '';
+$str5 = '\'\''; // обратный слеш избавляет от ошибок кавычек
 $int5 = (int) $str5;
 var_dump($int5);
 
-/*
- * lesson 3:
- */
 
 ?>
 </body>
