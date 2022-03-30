@@ -11,13 +11,13 @@ header('Content-Type: text/html; charset=utf-8');
  * Тут мы пишем код и коментарии к нему
  */
 
-
 /*
  * VIEW BLOCK /  Вид сайта
  * в этой части идет вывод HTML и PHP
  */
 
 ?>
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -25,21 +25,15 @@ header('Content-Type: text/html; charset=utf-8');
 	<title>Заголовок страницы</title>
 	<meta name="description" content="Описание страницы" />
 	<meta name="keywords" content="Ключевые слова через запятую" />
-	<link href="/normalize.css" rel="stylesheet" />
-	<link href="/style.css" rel="stylesheet" />
+	<link href="css/normalize.css" rel="stylesheet" />
+	<link href="css/style11.css" rel="stylesheet" />
+	<link href="css/bootstrap-grid.min.css" rel="stylesheet" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
-
 <body>
-<div>
-
 <?php
-echo '<H1>Привет, Даня!</H1>';
-echo '<p>Как там твой RUST поживает? А у меня есть уже свой сайт :)</p>';
+
 ?>
-
-
-
-</div>
 </body>
 </html>
+

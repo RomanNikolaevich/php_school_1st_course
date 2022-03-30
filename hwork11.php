@@ -13,8 +13,8 @@ header('Content-Type: text/html; charset=utf-8');
 	<title>Заголовок страницы</title>
 	<meta name="description" content="Описание страницы" />
 	<meta name="keywords" content="Ключевые слова через запятую" />
-	<link href="/normalize.css" rel="stylesheet" />
-	<link href="/style11.css" rel="stylesheet" />
+	<link href="css/normalize.css" rel="stylesheet" />
+	<link href="css/style11.css" rel="stylesheet" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 <body>
