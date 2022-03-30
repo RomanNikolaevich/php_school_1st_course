@@ -3,7 +3,7 @@
  * * Ядро сайта, сюда лучше не лезть просто так!
  */
 error_reporting(-1);
-ini_set('display_errors','on');
+ini_set('display_errors', 'on');
 header('Content-Type: text/html; charset=utf-8');
 
 /* Домашнее задание:
@@ -18,27 +18,32 @@ header('Content-Type: text/html; charset=utf-8');
 // Первый вариант - расширенный
 
 //создаем 4 функции с разными метематическими знаками
-function addition ($num1, $num2) {
+function addition($num1, $num2) {
 	return ($num1 + $num2);
 }
-function void ($num1, $num2) {
+
+function void($num1, $num2) {
 	return ($num1 + $num2);
 }
-function subtraction($num1, $num2){
+
+function subtraction($num1, $num2) {
 	return ($num1 - $num2);
 }
-function multiplication ($num1, $num2){
+
+function multiplication($num1, $num2) {
 	return ($num1 * $num2);
 }
-function division($num1, $num2){
-	if($num2 !=0){
+
+function division($num1, $num2) {
+	if($num2 != 0) {
 		return ($num1 / $num2);
-	}else{
+	}
+	else {
 		return 'Ошибка: деление на 0';
 	}
 } //условия
-function calc ($num1, $num2, $action){
-	switch($action){
+function calc($num1, $num2, $action) {
+	switch($action) {
 		case '+':
 			$action = addition($num1, $num2);
 			break;
@@ -57,21 +62,23 @@ function calc ($num1, $num2, $action){
 		default:
 			echo "Введена неккоректная информация!";
 	}
+
 	return $action;
 }
 
 // второй вариант более короткий, но функционал тот же:
 
-function division2 ($num3, $num4) {
-	if($num4!=0) {
+function division2($num3, $num4) {
+	if($num4 != 0) {
 		return ($num3 / $num4);
-	} else {
+	}
+	else {
 		return 'Ошибка: деление на 0';
 	}
 }
 
-function calc2 ($num3, $num4, $action2){
-	switch($action2){
+function calc2($num3, $num4, $action2) {
+	switch($action2) {
 		case "+":
 			$action2 = $num3 + $num4;
 			break;
@@ -90,8 +97,10 @@ function calc2 ($num3, $num4, $action2){
 		default:
 			echo "Введена неккоректная информация!";
 	}
+
 	return $action2;
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -101,7 +110,7 @@ function calc2 ($num3, $num4, $action2){
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>калькулятор на php</title>
 	<link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="/normalize.css" rel="stylesheet" />
+	<link href="/normalize.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="container">
@@ -109,12 +118,12 @@ function calc2 ($num3, $num4, $action2){
 		<p><?php
 			// вводим в круглых скобках желаемые данные и получаем на экран результат:
 			echo "Решение 1-го уравнения: <br>";
-			echo calc (5, 5, "");
-		?></p>
+			echo calc(5, 5, "");
+			?></p>
 		<p><?php
 			// вводим в круглых скобках желаемые данные и получаем на экран результат:
 			echo "Решение 2-го уравнения: <br>";
-			echo calc2 (6,0,"/");
+			echo calc2(6, 0, "/");
 			?>
 		</p>
 	</div>
