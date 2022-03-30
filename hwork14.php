@@ -3,20 +3,17 @@
  * * Ядро сайта, сюда лучше не лезть просто так!
  */
 error_reporting(-1);
-ini_set('display_errors','on');
+ini_set('display_errors', 'on');
 header('Content-Type: text/html; charset=utf-8');
 
 /* Домашнее задание:
- * Сделать калькулятор. 3 входящих параметра:
- 1. Первое число, 2. Второе число, 3. Действие (плюс, минус, умножить, поделить).
- * По примеру: function calc($num1,$num2,$action)
-  * 4. Если $action не задан, то по умолчанию должно складывать переменные.
+ Сделать калькулятор, принимающий данные из формы и вывести их на экране
  */
 ?>
 
 <?php
 // Первый вариант - расширенный
-
+/*
 //создаем 4 функции с разными метематическими знаками
 function addition ($num1, $num2) {
 	return ($num1 + $num2);
@@ -96,7 +93,7 @@ function calc2 ($num3, $num4, $action2){
 	return $action2;
 } // вводим в круглых скобках желаемые данные и получаем на экран результат:
 echo "Решение 2-го уравнения: <br>";
-echo calc2 (6,0,"/");
+echo calc2 (6,0,"/");*/
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -106,14 +103,14 @@ echo calc2 (6,0,"/");
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>калькулятор на php</title>
 	<link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="/normalize.css" rel="stylesheet" />
+	<link href="/normalize.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="container">
 	<div class="row">
 
-		</div>
 	</div>
+</div>
 </div>
 
 </body>
