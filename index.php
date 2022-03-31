@@ -32,9 +32,19 @@ header('Content-Type: text/html; charset=utf-8');
 </head>
 <body>
 <?php
+if(isset($_POST['submit'])) {
+	echo $_POST['login'];
+	echo 'GET: <pre>'.print_r($_GET, 1).'</pre>';
+	echo 'POST: <pre>'.print_r($_POST, 1).'</pre>';
 
-echo 'GET: <pre>'.print_r($_GET, 1).'</pre>';
-echo 'POST: <pre>'.print_r($_POST, 1).'</pre>';
+	$like = '';
+	if(isset($_POST['like'])) {
+		foreach($_POST['like'] as $v) {
+			$like .= $v.',';
+		}
+		echo '<p>Мы любим: '.$like.'</p>';
+	}
+}
 ?>
 
 <form action="" method="post">
@@ -62,15 +72,6 @@ echo 'POST: <pre>'.print_r($_POST, 1).'</pre>';
 	<div><input type="submit" name="submit" value="Отправить данные" style="border-style:hidden; border-radius:10px;
 	background-color:#90ff90"></div>
 </form>
-<!--type ="button" в формах не используется, в основном в через JS делается.
-тип = hidden - используется для указания кому отпарвляем остальные вводимые поля
-name - это наш ключ переменной.
-value - содержание значения данного поля
-после каждой отправки данных страница перегружается и наново записываются данные в массив $_POST->
-
-<?php
-
-?>
 </body>
 </html>
 
