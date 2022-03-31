@@ -33,22 +33,44 @@ header('Content-Type: text/html; charset=utf-8');
 <body>
 <?php
 
-	echo 'GET: <pre>'.print_r($_GET, 1).'</pre>';
-	echo 'POST: <pre>'.print_r($_POST, 1).'</pre>';
-	?>
+echo 'GET: <pre>'.print_r($_GET, 1).'</pre>';
+echo 'POST: <pre>'.print_r($_POST, 1).'</pre>';
+?>
 
 <form action="" method="post">
+	<input type="hidden" name="hide" value="скрытое значение">
 	<div>Заполните логин:<input type="text" name="login"></div>
 	<div>Заполните пароль:<input type="password" name="pass"></div>
-	<div><input type="submit" name="submit" value="Отправить данные"></div>
+	<div style="padding:15px">
+		Пол: <br> <!--тег <label> используется для придания интерактивности тексту - можно включить кнопку нажатием
+		 на текст "Мужчина"	так же label работает и с checlbox-->
+		<label>Мужчина <input type="radio" name="gender" value="Мужчина"></label> |
+		<!--в радио мы используем одинаковый тип и имя-->
+		<label>Женщина <input type="radio" name="gender" value="Женщина"></label>
+		<!--здесь value - это то что выведется текст в массив-->
+	</div>
+	<div style="padding:15px">
+		Любимый напиток: <br> <!--так же label работает и с checkbox-->
+		<label>Кофе <input type="checkbox" name="like[]" value="Кофе"></label> |
+		<label>Чай <input type="checkbox" name="like[]" value="Чай"></label> |
+		<label>Молоко <input type="checkbox" name="like[]" value="Молоко"></label>
+		<!--в отличие от радио в чекбоксе при отправке данных выведется только последняя отмеченная запись.
+		Чтобы этого избежать необходимо задать разные имена name (like 1, like2, ...) или записать в массив like []-
+		создастся новый массив внутри массива $_POST
+		Передачу данных в мссив возможна и в остальных местах, но в чекбоксе они обязательны-->
+	</div>
+	<div><input type="submit" name="submit" value="Отправить данные" style="border-style:hidden; border-radius:10px;
+	background-color:#90ff90"></div>
 </form>
 <!--type ="button" в формах не используется, в основном в через JS делается.
+тип = hidden - используется для указания кому отпарвляем остальные вводимые поля
 name - это наш ключ переменной.
-value - содержание значения данного поля->
+value - содержание значения данного поля
+после каждой отправки данных страница перегружается и наново записываются данные в массив $_POST->
 
-	<?php
+<?php
 
-	?>
+?>
 </body>
 </html>
 
