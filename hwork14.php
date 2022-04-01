@@ -23,10 +23,6 @@ if(isset($_POST['num1'], $_POST['num2'], $_POST['action'])) {
 		return ($num1 + $num2);
 	}
 
-	function void($num1, $num2) {
-		return ($num1 + $num2);
-	}
-
 	function subtraction($num1, $num2) {
 		return ($num1 - $num2);
 	}
@@ -42,14 +38,12 @@ if(isset($_POST['num1'], $_POST['num2'], $_POST['action'])) {
 		else {
 			return 'Ошибка: деление на 0';
 		}
+
 	} //условия
 	function calc($num1, $num2, $action) {
 		switch($action) {
 			case '+':
 				$action = addition($num1, $num2);
-				break;
-			case '':
-				$action = void($num1, $num2);
 				break;
 			case '-':
 				$action = subtraction($num1, $num2);
@@ -101,9 +95,7 @@ if(isset($_POST['num1'], $_POST['num2'], $_POST['action'])) {
 </form>
 
 <p style="padding: 10px">
-	Полученный результат:<br>
 	<?php
-
 	echo $_POST['num1'].$_POST['action'].$_POST['num2'].'='.calc($_POST['num1'], $_POST['num2'], $_POST['action']);
 	?>
 </p>
