@@ -16,53 +16,56 @@ if(isset($_POST['num1'], $_POST['num2'])) {..} нужно ввести знач�
 ?>
 
 <?php
-//создаем 4 функции с разными метематическими знаками
-function addition($num1, $num2) {
-	return ($num1 + $num2);
-}
+if(isset($_POST['num1'], $_POST['num2'], $_POST['action'])) {
+	//echo 'POST: <pre>'.print_r($_POST, 1).'</pre>';
 
-function void($num1, $num2) {
-	return ($num1 + $num2);
-}
-
-function subtraction($num1, $num2) {
-	return ($num1 - $num2);
-}
-
-function multiplication($num1, $num2) {
-	return ($num1 * $num2);
-}
-
-function division($num1, $num2) {
-	if($num2 != 0) {
-		return ($num1 / $num2);
-	}
-	else {
-		return 'Ошибка: деление на 0';
-	}
-} //условия
-function calc($num1, $num2, $action) {
-	switch($action) {
-		case '+':
-			$action = addition($num1, $num2);
-			break;
-		case '':
-			$action = void($num1, $num2);
-			break;
-		case '-':
-			$action = subtraction($num1, $num2);
-			break;
-		case '*':
-			$action = multiplication($num1, $num2);
-			break;
-		case '/':
-			$action = division($num1, $num2);
-			break;
-		default:
-			echo "Введена неккоректная информация!";
+	function addition($num1, $num2) {
+		return ($num1 + $num2);
 	}
 
-	return $action;
+	function void($num1, $num2) {
+		return ($num1 + $num2);
+	}
+
+	function subtraction($num1, $num2) {
+		return ($num1 - $num2);
+	}
+
+	function multiplication($num1, $num2) {
+		return ($num1 * $num2);
+	}
+
+	function division($num1, $num2) {
+		if($num2 != 0) {
+			return ($num1 / $num2);
+		}
+		else {
+			return 'Ошибка: деление на 0';
+		}
+	} //условия
+	function calc($num1, $num2, $action) {
+		switch($action) {
+			case '+':
+				$action = addition($num1, $num2);
+				break;
+			case '':
+				$action = void($num1, $num2);
+				break;
+			case '-':
+				$action = subtraction($num1, $num2);
+				break;
+			case '*':
+				$action = multiplication($num1, $num2);
+				break;
+			case '/':
+				$action = division($num1, $num2);
+				break;
+			default:
+				echo "Введена неккоректная информация!";
+		}
+
+		return $action;
+	}
 }
 ?>
 <!DOCTYPE html>
@@ -76,31 +79,33 @@ function calc($num1, $num2, $action) {
 	<link href="/normalize.css" rel="stylesheet"/>
 </head>
 <body>
-<div class="container">
-	<form action="" method="post">
-		<div>
-			<input type="text" name="x1" value="">
-		</div>
-		<div>
-			<input type="text" name="x1" value="">
-		</div>
-		<div>
-			<label>+ <input type="radio" name="plus" value="+"></label> |
-			<label>- <input type="radio" name="plus" value="-"></label> |
-			<label>* <input type="radio" name="plus" value="*"></label> |
-			<label>/ <input type="radio" name="plus" value="/"></label>
-		</div>
-		<div><input type="submit" name="submit" value="Отправить данные" style="border-style:hidden; border-radius:10px;
+<h1 style="color:#16bb16">Калькулятор</h1>
+<form action="" method="post">
+	<div style="padding: 10px">
+		Введите первое число: <br>
+		<input type="text" name="num1" value="">
+	</div>
+	<div style="padding: 10px">
+		Выберите математическую операцию: <br>
+		<label>+ <input type="radio" name="action" value="+"></label>
+		<label>- <input type="radio" name="action" value="-"></label>
+		<label>* <input type="radio" name="action" value="*"></label>
+		<label>/ <input type="radio" name="action" value="/"></label>
+	</div>
+	<div style="padding: 10px">
+		Введите второе число: <br>
+		<input type="text" name="num2" value="">
+	</div>
+	<div style="padding: 10px"><input type="submit" name="submit" value="Отправить данные" style="border-style:groove; border-radius:10px;
 	background-color:#90ff90"></div>
-	</form>
-</div>
-</div>
-<p>
-<?php
-// вводим в круглых скобках желаемые данные и получаем на экран результат:
-echo "Решение : <br>";
-echo calc(5, 5, "");
-?>
+</form>
+
+<p style="padding: 10px">
+	Полученный результат:<br>
+	<?php
+
+	echo $_POST['num1'].$_POST['action'].$_POST['num2'].'='.calc($_POST['num1'], $_POST['num2'], $_POST['action']);
+	?>
 </p>
 </body>
 </html>
