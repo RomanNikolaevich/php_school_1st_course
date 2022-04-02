@@ -15,53 +15,7 @@ header('Content-Type: text/html; charset=utf-8');
 if(isset($_POST['num1'], $_POST['num2'])) {..} нужно ввести значение 1 и 2 и отправить в нашу форму*/
 ?>
 
-<?php
-if(isset($_POST['num1'], $_POST['num2'], $_POST['action'])) {
-	//echo 'POST: <pre>'.print_r($_POST, 1).'</pre>';
 
-	function addition($num1, $num2) {
-		return ($num1 + $num2);
-	}
-
-	function subtraction($num1, $num2) {
-		return ($num1 - $num2);
-	}
-
-	function multiplication($num1, $num2) {
-		return ($num1 * $num2);
-	}
-
-	function division($num1, $num2) {
-		if($num2 != 0) {
-			return ($num1 / $num2);
-		}
-		else {
-			return 'Ошибка: деление на 0';
-		}
-
-	} //условия
-	function calc($num1, $num2, $action) {
-		switch($action) {
-			case '+':
-				$action = addition($num1, $num2);
-				break;
-			case '-':
-				$action = subtraction($num1, $num2);
-				break;
-			case '*':
-				$action = multiplication($num1, $num2);
-				break;
-			case '/':
-				$action = division($num1, $num2);
-				break;
-			default:
-				echo "Введена неккоректная информация!";
-		}
-
-		return $action;
-	}
-}
-?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -70,11 +24,38 @@ if(isset($_POST['num1'], $_POST['num2'], $_POST['action'])) {
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>калькулятор на php</title>
 	<link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="/normalize.css" rel="stylesheet"/>
+	<link href="css/normalize.css" rel="stylesheet"/>
 </head>
 <body>
 <h1 style="color:#16bb16">Калькулятор</h1>
 <form action="" method="post">
+	<?php
+	if(isset($_POST['num1']) && isset($_POST['submit']) && isset($_POST['num2'])) {
+		if(is_numeric($_POST['num1']) && is_numeric($_POST['num2'])) {
+			if($_POST['action'] =='+') {
+				$result = $_POST['num1'] + $_POST['num2'];
+			}
+			if($_POST['action'] =='-') {
+				$result = $_POST['num1'] - $_POST['num2'];
+			}
+			if($_POST['action'] =='*') {
+				$result = $_POST['num1'] * $_POST['num2'];
+			}
+			if($_POST['action'] ==':') {
+				if($_POST['num2'] != 0) {
+					$result = $_POST['num1'] / $_POST['num2'];
+				}
+				else {
+					$result = 'Ошибка: деление на 0';
+				}
+			}
+			echo "<h1>{$_POST['num1']}{$_POST['action']}{$_POST['num2']} = {$result}</h1>";
+		}
+		else {
+			echo 'Требуются числовые значения';
+		}
+	}
+?>
 	<div style="padding: 10px">
 		Введите первое число: <br>
 		<input type="text" name="num1" value="">
@@ -84,7 +65,7 @@ if(isset($_POST['num1'], $_POST['num2'], $_POST['action'])) {
 		<label>+ <input type="radio" name="action" value="+"></label>
 		<label>- <input type="radio" name="action" value="-"></label>
 		<label>* <input type="radio" name="action" value="*"></label>
-		<label>/ <input type="radio" name="action" value="/"></label>
+		<label>: <input type="radio" name="action" value=":"></label>
 	</div>
 	<div style="padding: 10px">
 		Введите второе число: <br>
@@ -93,11 +74,5 @@ if(isset($_POST['num1'], $_POST['num2'], $_POST['action'])) {
 	<div style="padding: 10px"><input type="submit" name="submit" value="Отправить данные" style="border-style:groove; border-radius:10px;
 	background-color:#90ff90"></div>
 </form>
-
-<p style="padding: 10px">
-	<?php
-	echo $_POST['num1'].$_POST['action'].$_POST['num2'].'='.calc($_POST['num1'], $_POST['num2'], $_POST['action']);
-	?>
-</p>
 </body>
 </html>
