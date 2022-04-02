@@ -30,32 +30,41 @@ if(isset($_POST['num1'], $_POST['num2'])) {..} нужно ввести знач�
 <h1 style="color:#16bb16">Калькулятор</h1>
 <form action="" method="post">
 	<?php
-	if(isset($_POST['num1']) && isset($_POST['submit']) && isset($_POST['num2'])) {
+	if(isset($_POST['num1']) && isset($_POST['submit']) && isset($_POST['num2']) && isset($_POST['action'])) {
 		if(is_numeric($_POST['num1']) && is_numeric($_POST['num2'])) {
-			if($_POST['action'] =='+') {
+			$result = false;
+			$error = "";
+
+			if($_POST['action'] == '+') {
 				$result = $_POST['num1'] + $_POST['num2'];
 			}
-			if($_POST['action'] =='-') {
+			elseif($_POST['action'] == '-') {
 				$result = $_POST['num1'] - $_POST['num2'];
 			}
-			if($_POST['action'] =='*') {
+			elseif($_POST['action'] == '*') {
 				$result = $_POST['num1'] * $_POST['num2'];
 			}
-			if($_POST['action'] ==':') {
+			elseif($_POST['action'] == ':') {
 				if($_POST['num2'] != 0) {
 					$result = $_POST['num1'] / $_POST['num2'];
+				} else {
+					$error = 'Ошибка: деление на 0';
 				}
-				else {
-					$result = 'Ошибка: деление на 0';
-				}
+			} else {
+				$error = 'Недопустимая операция';
 			}
-			echo "<h1>{$_POST['num1']}{$_POST['action']}{$_POST['num2']} = {$result}</h1>";
+
+			if ($result) {
+				echo "<h1>{$_POST['num1']}{$_POST['action']}{$_POST['num2']} = {$result}</h1>";
+			} else {
+				echo $error;
+			}
 		}
 		else {
 			echo 'Требуются числовые значения';
 		}
 	}
-?>
+	?>
 	<div style="padding: 10px">
 		Введите первое число: <br>
 		<input type="text" name="num1" value="">
