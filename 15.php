@@ -33,7 +33,7 @@ if(isset($_GET['page'])){ //если страница существует
 ?>
 <div id="header">
 Навигация:
-<a href="15.php?page=main">Главная</a> |
+<a href="15.php?page=15/main">Главная</a> |
 <a href="15.php?page=15/history">Наша история</a> |
 <a href="15.php?page=15/contacts">Контакты</a> |
 <a href="15.php?page=15/aboutus">О себе</a>
