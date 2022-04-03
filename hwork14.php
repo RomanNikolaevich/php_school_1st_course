@@ -54,9 +54,9 @@ if(isset($_POST['num1'], $_POST['num2'])) {..} нужно ввести знач�
 				$error = 'Недопустимая операция';
 			}
 
-			if ($result) {
+			if ($result!==false)
 				echo "<h1>{$_POST['num1']}{$_POST['action']}{$_POST['num2']} = {$result}</h1>";
-			} else {
+			else {
 				echo $error;
 			}
 		}
@@ -71,10 +71,10 @@ if(isset($_POST['num1'], $_POST['num2'])) {..} нужно ввести знач�
 	</div>
 	<div style="padding: 10px">
 		Выберите математическую операцию: <br>
-		<label>+ <input type="radio" name="action" value="+"></label>
-		<label>- <input type="radio" name="action" value="-"></label>
-		<label>* <input type="radio" name="action" value="*"></label>
-		<label>: <input type="radio" name="action" value=":"></label>
+		<label> + <input type="radio" name="action" value="+"></label>
+		<label> - <input type="radio" name="action" value="-"></label>
+		<label> * <input type="radio" name="action" value="*"></label>
+		<label> : <input type="radio" name="action" value=":"></label>
 	</div>
 	<div style="padding: 10px">
 		Введите второе число: <br>
