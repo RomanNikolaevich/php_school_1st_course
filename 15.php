@@ -34,9 +34,9 @@ if(isset($_GET['page'])){ //если страница существует
 <div id="header">
 Навигация:
 <a href="15.php?page=main">Главная</a> |
-<a href="15.php?page=history">Наша история</a> |
-<a href="15.php?page=contacts">Контакты</a> |
-<a href="15.php?page=aboutus">О себе</a>
+<a href="15.php?page=15/history">Наша история</a> |
+<a href="15.php?page=15/contacts">Контакты</a> |
+<a href="15.php?page=15/aboutus">О себе</a>
 </div>
 <div id="content">
 <?php include $_GET['page'].'.php';?> <!-- '.php' нужно обязательно указывать-->
