@@ -1,14 +1,5 @@
-<?php
-error_reporting(-1);
-ini_set('display_errors', 'on');
-header('Content-Type: text/html; charset=utf-8');
-?>
-<!DOCTYPE html>
-<html lang="ru">
 <body>
 <div class="block">
-
-
 	<div class="conteiner-content">
 		<div class="conteiner-content-block">
 			<img src="img/page1_img_01.png" alt="">
@@ -27,4 +18,3 @@ header('Content-Type: text/html; charset=utf-8');
 </div>
 </body>
 
-</html>

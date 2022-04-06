@@ -12,10 +12,9 @@
 			<h3>What's Happening on Facebook</h3>
 			<p>Bayarsety kertya aset aplicaboes kerasae</p>
 		</div>
-
 	</div>
 	<div class="block">
-		<div class="conteiner-footer">AGRO.UNITED © 2013-<?php echo date("o")?> PRIVACY POLICY</div>
+		<div class="conteiner-footer">AGRO.UNITED © 2013-<?php echo date("o") ?> PRIVACY POLICY</div>
 	</div>
 </div>
 
