@@ -19,11 +19,13 @@ header('Content-Type: text/html; charset=utf-8');
 		<div class="conteiner-content-block">
 			<img src="img/page1_img_01.png" alt="">
 			<h3>
-				<font>OUR</font> CONTACTS
+				<font>OUR</font> SERVICES
 			</h3>
-			<p><h2>Контакты</h2><br>
-			<p>г.Киев, бул.Шевченка, 18</p>
-			<p>тел.: 044 256 38 41</p>.</p>
+			<p>Koleacene anritma haseseralety. Cumaser kertyaseocis ntoquas caaslecenas stricies phaledatyfena nec
+				sit
+				amm
+				easerment. Utdolor dapegementum velursus ifend elineanctor wisiet urliquam. Berat vpaiast rtyase
+				fertasbe.</p>
 			<button class="button"></button>
 		</div>
 	</div>
@@ -32,11 +34,6 @@ header('Content-Type: text/html; charset=utf-8');
 </body>
 
 </html>
-
-
-
-
-
 
 
 

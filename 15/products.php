@@ -5,13 +5,6 @@ header('Content-Type: text/html; charset=utf-8');
 ?>
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Roma Agro test site</title>
-	<link href="style.css" rel="stylesheet">
-</head>
 <body>
 <div class="block">
 
@@ -20,7 +13,7 @@ header('Content-Type: text/html; charset=utf-8');
 		<div class="conteiner-content-block">
 			<img src="img/page1_img_01.png" alt="">
 			<h3>
-				<font>ABOUT</font> US
+				<font>PRODUCTS</font> AGRO
 			</h3>
 			<p>Koleacene anritma haseseralety. Cumaser kertyaseocis ntoquas caaslecenas stricies phaledatyfena nec
 				sit
@@ -35,7 +28,3 @@ header('Content-Type: text/html; charset=utf-8');
 </body>
 
 </html>
-
-
-
-
