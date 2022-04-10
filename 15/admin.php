@@ -1,12 +1,8 @@
 <?php
-/*if($_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
+if($_SERVER['REMOTE_ADDR'] != '127.0.0.2') {
 	include '404.php';
-}*/
-?>
-<?php
-/*if(isset($_POST['login'], $_POST['pass'])) {
-
-}*/
+	exit;
+}
 ?>
 
 <body>
