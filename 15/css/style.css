@@ -57,7 +57,7 @@ font {
 
 .item2 a {
 
-  background: url("img/marker_01.png") no-repeat 0 3px;
+  background: url("../img/marker_01.png") no-repeat 0 3px;
   padding-left: 20px;
   /*отступы картинки от текста*/
   text-decoration: none;
@@ -95,12 +95,12 @@ font {
   margin: 40px 15px;
   padding: 33px;
   width: 288px;
-  background-image: url(img/block-1_shape.jpg);
+  background-image: url(../img/block-1_shape.jpg);
 }
 
 .button {
   display: inline-block;
-  background-image: url(img/button1.jpg);
+  background-image: url(../img/button1.jpg);
   width: 100px;
   height: 40px;
   border-radius: 5px;
@@ -109,7 +109,7 @@ font {
 
 .button:hover {
   display: inline-block;
-  background-image: url(img/button2.jpg);
+  background-image: url(../img/button2.jpg);
   width: 100px;
   height: 40px;
   border: none;
@@ -168,7 +168,7 @@ font {
 
 .item3 {
   /* Просто для демонстрации */
-  background-image: url(img/menu2_shape.jpg);
+  background-image: url(../img/menu2_shape.jpg);
   color: white;
   font-size: 1.8rem;
   padding: 10px;

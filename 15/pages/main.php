@@ -1,5 +1,3 @@
-<body>
-<div class="block">
 <div class="conteiner-content">
 	<div class="conteiner-content-block">
 		<img src="img/page1_img_01.png" alt="">
@@ -81,5 +79,4 @@
 		<button class="button"></button>
 	</div>
 </div>
-</div>
-</body>
+
