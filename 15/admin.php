@@ -1,5 +1,5 @@
 <?php
-if($_SERVER['REMOTE_ADDR'] != '127.0.0.2') {
+if($_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
 	include '404.php';
 	exit;
 }
