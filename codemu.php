@@ -330,7 +330,16 @@ echo $result;
 	<code>
 	$arr = [10, 20, 30, 50, 235, 3000];
 
-		НЕ ПОЛУЧИЛОСЬ РЕШИТЬ!!! ОСТАВЛЮ НА ПОТОМ!!!
+			$arr = [10, 20, 30, 50, 235, 3000];
+
+	foreach ($arr as $value){
+			$value =(string)$value;
+			if($value[0] ==1 || $value[0]==2 ||$value[0]==5 ){
+				$valueNew[] = $value;
+			}
+	}
+	print_r($valueNew);
+
 	</code>
 	</pre>
 
@@ -422,6 +431,20 @@ echo $result;
 	<pre>
 	<code>
 		НЕ ПОЛУЧИЛОСЬ РЕШИТЬ!!! ОСТАВЛЮ НА ПОТОМ!!!
+		$sum1 = 0;
+		$sum2 = 0;
+
+	foreach (range(1, 19) as $key => $value) {// сделал массив от 1 до 19
+		$value =(string)$value;
+		if($value[0] ==1 && $sum2 < 100){ //отобрал с него только те что начинаются на "1"
+			/*$sum1 += $key;*/
+			$sum2 += $value;
+			/*echo $sum2.'<br>';*/
+			echo $sum1; // не работает -долно было посчитать сколько цикло понадобилось, чтобы сумма значений превысила "100"
+		}
+	}
+
+
 	</code>
 	</pre>
 
@@ -656,6 +679,94 @@ echo $result;
 		'employee6' => 600,
 		'employee7' => 700,
 	];
+
+	$length = count($arr);
+	foreach($arr as &$value) {
+		$value += 1 / 10 * $value;
+}
+	print_r($arr);
+	</code>
+	</pre>
+
+	<h3> урок 63.2</h3>
+	<p>Модифицируйте предыдущую задачу так, чтобы зарплата увеличивалась только тем работникам, у которых она меньше или равна 400.</p>
+	<pre>
+	<code>
+	$arr = [
+		'employee1' => 100,
+		'employee2' => 200,
+		'employee3' => 300,
+		'employee4' => 400,
+		'employee5' => 500,
+		'employee6' => 600,
+		'employee7' => 700,
+	];
+
+	$length = count($arr);
+	foreach($arr as &$value) {
+		if($value <= 400){
+		$value += 1 / 10 * $value;
+		}
+}
+	print_r($arr);
+	</code>
+	</pre>
+
+	<h3> урок 63.3</h3>
+	<p>Найдите сумму ключей этого массива и поделите ее на сумму значений.</p>
+	<pre>
+	<code>
+		$arr = [1 => 6, 2 => 7, 3 => 8, 4 => 9, 5 => 10];
+	$totalKey = 0;
+	$totalVal = 0;
+	$total = 0;
+	foreach ($arr as $key => $value){
+		$totalKey += $key;
+		$totalVal += $value;
+		$total = $totalKey / $totalVal;
+	}
+	echo "sum $totalKey<br>";
+	echo "sum $totalVal<br>";
+	echo "sum $total<br>";
+	</code>
+	</pre>
+
+	<h3> урок 63.4</h3>
+	<p>Запишите ключи этого массива в один массив, а значения - в другой.</p>
+	<pre>
+	<code>
+	$arr = ['a' => 1, 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 5];
+	foreach ($arr as $key => $value){
+		$keyNew[] = $key;
+		$valueNew[] = $value;
+	}
+	print_r($keyNew);
+	print_r($valueNew);
+
+	</code>
+	</pre>
+
+	<h3> урок 63.5</h3>
+	<p>Запишите в новый массив элементы, значение которых начинается с цифры 1 или цифры 2.</p>
+	<pre>
+	<code>
+	$arr = [
+		1 => 125,
+		2 => 225,
+		3 => 128,
+		4 => 356,
+		5 => 145,
+		6 => 281,
+		7 => 452,
+	];
+	foreach ($arr as $value){
+			$value =(string)$value;
+			if($value[0] ==1 || $value[0]==2){
+				$valueNew[] = $value;
+			}
+				}
+	print_r($valueNew);
+
 	</code>
 	</pre>
 </form>
