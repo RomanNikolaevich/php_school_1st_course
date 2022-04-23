@@ -18,14 +18,54 @@ if(!in_array($page, $allowed)) {
 }
 $path = 'pages/'.$page.'.php';
 
+//logout:
+function logout() {
+	// Производим выход пользователя
+	unset($_SESSION['login']);//закрытие сессии по логину
+	session_destroy();//удаление сессии
+
+	setcookie("login", "", time() - 3600, '/');
+
+	//setcookie("login","");
+	//setcookie("password","");
+
+	// Редирект на главную страницу
+	//header("location:login.php");//переход на главную
+}
+
+//админка:
+function admin() {
+	if(!empty($_POST["remember"])) {
+		//setcookie ("login",$_POST["login"],time()+ 3600);
+		//setcookie ("password",$_POST["password"],time()+ 3600);
+		echo '<h3>Добро пожаловать '.$_POST['login'].'</h3>';
+		echo "<p>Cookies успешно включены</p>";
+		//echo $_POST["login"];
+		//echo $_POST["password"];
+		//echo $_COOKIE["login"];
+		//echo $_COOKIE["email"];
+		//echo $_COOKIE["password"];
+		echo '<pre>';
+		echo 'SESSION: ';
+		print_r($_SESSION);
+		echo 'COOKIE: ';
+		print_r($_COOKIE);
+	}
+	else {
+		setcookie("login", "");
+		setcookie("password", "");
+		echo "Cookies выключены";
+	}
+}
+
 //login:
 function login() {
-if(!isset($_POST['login'], $_POST['pass'])) {
-	if(isset($_POST['email']) && filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-		setcookie("login", "", time() + 3600 * 24 * 30 * 12, '/');
+	if(!isset($_POST['login'], $_POST['pass'])) {
+		if(isset($_POST['email']) && filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+			setcookie("login", "", time() + 3600 * 24 * 30 * 12, '/');
+		}
+		//include 'pages/login.php';
 	}
-	//include 'pages/login.php';
-}
 	?>
 	<div class="container mt-4">
 		<div class="row">
@@ -56,48 +96,8 @@ if(!isset($_POST['login'], $_POST['pass'])) {
 	</div>
 <?php }
 
-
-//logout:
-function logout() {
-// Производим выход пользователя
-unset($_SESSION['login']);//закрытие сессии по логину
-session_destroy();//удаление сессии
-
-setcookie("login", "", time() - 3600, '/');
-
-//setcookie("login","");
-//setcookie("password","");
-
-// Редирект на главную страницу
-//header("location:login.php");//переход на главную
-}
-//админка:
-function admin(){
-	if(!empty($_POST["remember"])) {
-		//setcookie ("login",$_POST["login"],time()+ 3600);
-		//setcookie ("password",$_POST["password"],time()+ 3600);
-		echo '<h3>Добро пожаловать '.$_POST['login'].'</h3>';
-		echo "<p>Cookies успешно включены</p>";
-		//echo $_POST["login"];
-		//echo $_POST["password"];
-		//echo $_COOKIE["login"];
-		//echo $_COOKIE["email"];
-		//echo $_COOKIE["password"];
-		echo '<pre>';
-		echo 'SESSION: ';
-		print_r($_SESSION);
-		echo 'COOKIE: ';
-		print_r($_COOKIE);
-
-
-	} else {
-		setcookie("login","");
-		setcookie("password","");
-		echo "Cookies выключены";
-	}
-}
-
 ?>
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
