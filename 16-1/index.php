@@ -3,7 +3,7 @@ error_reporting(-1);
 ini_set('display_errors', 'on');
 header('Content-Type: text/html; charset=utf-8');
 session_start();
-setcookie('name1', 'Roman', time()+60*60*24*30*12, '/');
+setcookie('name1', 'Roman', time()+3600*24*30*12, '/');
 
 
 $page = $_GET['page'] ?? 'main';
@@ -13,7 +13,7 @@ $adminVisability = $_SERVER['REMOTE_ADDR'] === $adminIp;
 if($_SERVER['REMOTE_ADDR'] !== $adminIp && $page === 'login') {
 	$page = '404';
 }
-$allowed = array ('index', 'main', 'contacts', 'aboutus', 'partners', 'products', 'services', 'regin','login', 'logout');
+$allowed = array ('index', 'main', 'contacts', 'aboutus', 'partners', 'products', 'services', 'regin','login', 'logout', 'admin');
 if(!in_array($page, $allowed)) {
 	$page = '404';
 }
