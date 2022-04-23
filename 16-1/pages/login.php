@@ -1,7 +1,7 @@
 <?php
 if(!isset($_POST['login'], $_POST['pass'])) {
 	if(isset($_POST['email']) && filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-		setcookie("login", "Roman", time() + 60 * 60 * 24 * 30 * 12, '/');
+		setcookie("login", "Roman", time() + 3600 * 24 * 30 * 12, '/');
 	}
 	?>
 	<div class="container mt-4">

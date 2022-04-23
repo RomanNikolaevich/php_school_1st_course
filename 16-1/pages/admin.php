@@ -9,6 +9,7 @@ if(!empty($_POST["remember"])) {
 	echo $_COOKIE["login"];
 	echo $_COOKIE["email"];
 	echo $_COOKIE["password"];
+	print_r($_COOKIE);
 
 
 } else {

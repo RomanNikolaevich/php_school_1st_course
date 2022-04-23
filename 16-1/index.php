@@ -3,7 +3,7 @@ error_reporting(-1);
 ini_set('display_errors', 'on');
 header('Content-Type: text/html; charset=utf-8');
 session_start();
-setcookie('name1', 'Roman', time()+3600*24*30*12, '/');
+//setcookie("login", "Roman", time() + 3600 * 24 * 30 * 12, '/');
 
 
 $page = $_GET['page'] ?? 'main';
