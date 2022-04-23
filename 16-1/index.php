@@ -19,8 +19,31 @@ if(!in_array($page, $allowed)) {
 }
 $path = 'pages/'.$page.'.php';
 
-//$_SESSION['name'] = 'login';
-//echo $_SESION['name'];
+//login:
+function login() {
+	if(!isset($_POST['login'], $_POST['pass'])) {
+		if(isset($_POST['email']) && filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+			setcookie("login", "", time() + 3600 * 24 * 30 * 12, '/');
+		}
+		include 'pages/login.php';
+	}
+}
+
+//logout:
+function logout() {
+	// Производим выход пользователя
+	unset($_SESSION['login']);//закрытие сессии по логину
+	session_destroy();//удаление сессии
+
+	setcookie("login", "", time() - 3600, '/');
+
+	/*setcookie("login","");
+	setcookie("password","");*/
+
+	// Редирект на главную страницу
+	//header("location:login.php");//переход на главную
+}
+
 
 
 ?>
