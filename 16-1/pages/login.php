@@ -16,7 +16,7 @@ if(!isset($_POST['login'], $_POST['pass'])) {
 						   } ?>"><br>
 					<input type="email" class="form-control" name="email" id="email" placeholder="Введите Email"
 						   required value="<?php if(isset($_COOKIE["email"])) {
-							   setcookie("password", $_POST["email"], time() + 3600);
+							   setcookie("email", $_POST["email"], time() + 3600);
 						   } ?>"><br>
 					<input type="password" class="form-control" name="password" id="pass" placeholder="Введите пароль"
 						   required value="<?php if(isset($_COOKIE["password"])) {
