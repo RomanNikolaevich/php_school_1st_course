@@ -3,7 +3,7 @@ error_reporting(-1);
 ini_set('display_errors', 'on');
 header('Content-Type: text/html; charset=utf-8');
 session_start();
-//setcookie("login", "Roman", time() + 3600 * 24 * 30 * 12, '/');
+//setcookie('login', 'Roman', time() + 3600 * 24 * 30 * 12, '/');
 
 $page = $_GET['page'] ?? 'main';
 $adminIp = '127.0.0.1';
@@ -18,33 +18,34 @@ if(!in_array($page, $allowed)) {
 }
 $path = 'pages/'.$page.'.php';
 
-//logout:
-function logout() {
-	// Производим выход пользователя
-	unset($_SESSION['login']);//закрытие сессии по логину
-	session_destroy();//удаление сессии
+//нашел код на сайте, но он не работает:
+/*$name = $_POST['login'];
+setcookie('login', $name, time() + 3600 * 24 * 30 * 12);
+if (isset($_COOKIE['login'])) {
+$name = $_COOKIE['login'];
+echo "<h1>Hello $name, it is nice to see you again.</h1>";*/
 
-	setcookie("login", "", time() - 3600, '/');
-
-	//setcookie("login","");
-	//setcookie("password","");
-
-	// Редирект на главную страницу
-	//header("location:login.php");//переход на главную
+//login:
+function login() {
+	if(!isset($_POST['login'], $_POST['pass'])) {
+		if(isset($_POST['email']) && filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+			include 'pages/login.php';
+		}
+	}
 }
 
 //админка:
-function admin() {
+function adminEnter() {
 	if(!empty($_POST["remember"])) {
 		//setcookie ("login",$_POST["login"],time()+ 3600);
 		//setcookie ("password",$_POST["password"],time()+ 3600);
 		echo '<h3>Добро пожаловать '.$_POST['login'].'</h3>';
 		echo "<p>Cookies успешно включены</p>";
-		//echo $_POST["login"];
-		//echo $_POST["password"];
-		//echo $_COOKIE["login"];
-		//echo $_COOKIE["email"];
-		//echo $_COOKIE["password"];
+		//echo $_POST['login'];
+		//echo $_POST['password'];
+		echo $_COOKIE['login'];
+		echo $_COOKIE['email'];
+		echo $_COOKIE['password'];
 		echo '<pre>';
 		echo 'SESSION: ';
 		print_r($_SESSION);
@@ -55,46 +56,26 @@ function admin() {
 		setcookie("login", "");
 		setcookie("password", "");
 		echo "Cookies выключены";
+		header('location:login.php', true, 303);// с помощью 303 редиректа переадресовать на внутреннюю страницу сайта.
+		exit;
 	}
 }
 
-//login:
-function login() {
-	if(!isset($_POST['login'], $_POST['pass'])) {
-		if(isset($_POST['email']) && filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-			setcookie("login", "", time() + 3600 * 24 * 30 * 12, '/');
-		}
-		//include 'pages/login.php';
-	}
-	?>
-	<div class="container mt-4">
-		<div class="row">
-			<div class="col">
-				<!-- Форма авторизации -->
-				<h2>Форма входа</h2>
-				<form action="index.php?page=admin" method="post">
-					<input type="text" class="form-control" name="login" id="login" placeholder="Введите логин"
-						   required value="<?php if(isset($_COOKIE["login"])) {
-						setcookie("login", $_POST["login"], time() + 3600);
-					} ?>"><br>
-					<input type="email" class="form-control" name="email" id="email" placeholder="Введите Email"
-						   required value="<?php if(isset($_COOKIE["email"])) {
-						setcookie("email", $_POST["email"], time() + 3600);
-					} ?>"><br>
-					<input type="password" class="form-control" name="password" id="pass" placeholder="Введите пароль"
-						   required value="<?php if(isset($_COOKIE["password"])) {
-						setcookie("password", $_POST["password"], time() + 3600);
-					} ?>"><br>
-					<p><input type="checkbox" name="remember"/> Запомнить меня</p>
-					<button class="btn btn-suc" name="do_login" type="submit">Авторизоваться</button>
-				</form>
-				<br>
-				<p>Если вы еще не зарегистрированы, тогда нажмите <a href="index.php?page=regin">здесь</a>.</p>
-				<p>Вернуться на <a href="index.php">главную</a>.</p>
-			</div>
-		</div>
-	</div>
-<?php }
+//logout:
+function logout() {
+	// Производим выход пользователя
+	unset($_SESSION['login']);//закрытие сессии по логину
+	session_destroy();//удаление сессии
+
+	setcookie('login', '', time() - 3600, '/');
+
+	//setcookie("login","");
+	//setcookie("password","");
+
+	// Редирект на главную страницу
+	header('location:login.php', true, 303);//переход на главную
+	/*exit;*/
+}
 
 ?>
 
