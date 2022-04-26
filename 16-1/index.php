@@ -3,7 +3,6 @@ error_reporting(-1);
 ini_set('display_errors', 'on');
 header('Content-Type: text/html; charset=utf-8');
 session_start();
-//setcookie('login', 'Roman', time() + 3600 * 24 * 30 * 12, '/');
 
 $page = $_GET['page'] ?? 'main';
 $adminIp = '127.0.0.1';
@@ -12,52 +11,61 @@ $adminVisability = $_SERVER['REMOTE_ADDR'] === $adminIp;
 if($_SERVER['REMOTE_ADDR'] !== $adminIp && $page === 'login') {
 	$page = '404';
 }
+
+$path = 'pages/'.$page.'.php';
+
+//проверка допустимых имен страниц
 $allowed = ['index', 'main', 'contacts', 'aboutus', 'partners', 'products', 'services', 'regin', 'login', 'logout', 'admin'];
 if(!in_array($page, $allowed)) {
 	$page = '404';
 }
-$path = 'pages/'.$page.'.php';
 
-//нашел код на сайте, но он не работает:
-/*$name = $_POST['login'];
-setcookie('login', $name, time() + 3600 * 24 * 30 * 12);
-if (isset($_COOKIE['login'])) {
-$name = $_COOKIE['login'];
-echo "<h1>Hello $name, it is nice to see you again.</h1>";*/
-
-//login:
+//вход:
 function login() {
-	if(!isset($_POST['login'], $_POST['pass'])) {
-		if(isset($_POST['email']) && filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-			include 'pages/login.php';
+	//исходные данные
+	$loginAdm = 'Roman';
+	$emailAdm = 'roma@gmail.com';
+	$passAdm = '123123';
+
+	if(isset($_POST['do_login'])) { // если кнопка нажата - обработка
+		if(isset($_POST['login'], $_POST['password'])) {
+			if(($_POST['login'] == $loginAdm) && ($_POST['email'] == $emailAdm) && ($_POST['password'] == $passAdm)) {
+				if(isset($_POST['email']) && filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+					if(!empty($_POST["remember"])) {
+						setcookie("login", $_POST['login'], time() + 60, '/');
+						$_COOKIE['login'] = $_POST['login'];
+						setcookie("email", $_POST['email'], time() + 60, '/');
+						$_COOKIE['email'] = $_POST['email'];
+						setcookie("password", $_POST['password'], time() + 60, '/');
+						$_COOKIE['password'] = $_POST['password'];
+						echo '<h3>Добро пожаловать '.$_POST['login'].'</h3>';
+						echo "<p>Cookies успешно включены</p>";
+						echo $_POST['login'];
+						echo $_POST['password'];
+						echo $_COOKIE['login'];
+						echo $_COOKIE['email'];
+						echo $_COOKIE['password'];
+						echo '<pre>';
+						echo 'SESSION: ';
+						print_r($_SESSION);
+						echo 'COOKIE: ';
+						print_r($_COOKIE);
+					}
+					else {
+						echo "Cookies выключены";
+						//header('location:login.php', true, 303);// с помощью 303 редиректа переадресовать на внутреннюю страницу сайта.
+						exit;
+					}
+					echo 'авторизация успешная';
+				}
+				else {
+					echo 'неверные данные';
+				}
+			}
 		}
 	}
-}
-
-//админка:
-function adminEnter() {
-	if(!empty($_POST["remember"])) {
-		//setcookie ("login",$_POST["login"],time()+ 3600);
-		//setcookie ("password",$_POST["password"],time()+ 3600);
-		echo '<h3>Добро пожаловать '.$_POST['login'].'</h3>';
-		echo "<p>Cookies успешно включены</p>";
-		//echo $_POST['login'];
-		//echo $_POST['password'];
-		echo $_COOKIE['login'];
-		echo $_COOKIE['email'];
-		echo $_COOKIE['password'];
-		echo '<pre>';
-		echo 'SESSION: ';
-		print_r($_SESSION);
-		echo 'COOKIE: ';
-		print_r($_COOKIE);
-	}
-	else {
-		setcookie("login", "");
-		setcookie("password", "");
-		echo "Cookies выключены";
-		header('location:login.php', true, 303);// с помощью 303 редиректа переадресовать на внутреннюю страницу сайта.
-		exit;
+	else { //если не нажата - видим форму
+		include 'pages/login.php';
 	}
 }
 

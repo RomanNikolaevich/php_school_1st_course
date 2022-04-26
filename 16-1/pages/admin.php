@@ -1,5 +1,5 @@
 <?php
-adminEnter();
+//adminEnter();
 
 ?>
 
