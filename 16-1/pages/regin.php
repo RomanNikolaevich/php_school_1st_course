@@ -19,7 +19,7 @@
 				</form>
 				<br>
 				<p>Если вы зарегистрированы, тогда нажмите <a href="index.php?page=login">здесь</a>.</p>
-				<p>Вернуться на <a href="../index.php">главную</a>.</p>
+				<p>Вернуться на <a href="index.php">главную</a>.</p>
 			</div>
 		</div>
 	</div>
