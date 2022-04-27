@@ -7,10 +7,12 @@
 			<!-- Форма авторизации -->
 			<h2>Форма входа</h2>
 			<form action="index.php?page=admin" method="post">
-				<input type="text" class="form-control" name="login" id="login" placeholder="Введите логин" required><br>
-				<input type="email" class="form-control" name="email" id="email" placeholder="Введите Email" required><br>
-				<input type="password" class="form-control" name="password" id="password" placeholder="Введите пароль" required><br>
-				<p><input type="checkbox" name="remember"/> Запомнить меня</p>
+				<input type="text" class="form-control" name="login" id="login" placeholder="Введите логин"
+					   required><br>
+				<input type="email" class="form-control" name="email" id="email" placeholder="Введите Email"
+					   required><br>
+				<input type="password" class="form-control" name="password" id="password" placeholder="Введите пароль"
+					   required><br>
 				<button class="btn btn-suc" name="do_login" type="submit">Авторизоваться</button>
 			</form>
 			<br>
