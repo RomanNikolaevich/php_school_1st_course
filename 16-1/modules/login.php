@@ -5,11 +5,12 @@ $passAdm = '123123';
 
 if(isset($_POST['login'], $_POST['email'], $_POST['password'], $_POST['do_login'])) {
 
-	if(($_POST['login'] === $loginAdm) && ($_POST['email'] === $emailAdm) && ($_POST['password'] === $passAdm)) {
+	if(($_POST['login'] === $loginAdm)
+		&& ($_POST['email'] === $emailAdm)
+		&& ($_POST['password'] === $passAdm)
+	) {
 		$_SESSION['access'] = 1;
 		setcookie('access', 1, time() + 3600, '/');
 		header('Location: index.php');
 	}
 }
-
-
