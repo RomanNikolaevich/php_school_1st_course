@@ -19,7 +19,7 @@ $allowed = ['index', 'main', 'contacts', 'aboutus', 'partners', 'products', 'ser
 if(!in_array($page, $allowed)) {
 	$page = '404';
 } else {
-	$modulePath = __DIR__ . '/modules'. $page. '.php';
+	$modulePath = __DIR__ . '/modules/'.$page. '.php';
 	if(file_exists($modulePath)) {
 		include_once $modulePath;
 	}
