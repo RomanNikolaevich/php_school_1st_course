@@ -1802,7 +1802,7 @@ scandir('./1')//то анализируем папку '1'
 	MVC
 	Шаблоны*/
 
-17-1 //Настройка файла index.php
+17-1-1 //Настройка файла index.php
 error_reporting(-1);
 ini_set('display_errors', 'on');
 header('Content-Type: text/html; charset=utf-8');
@@ -1814,32 +1814,46 @@ include_once './libs/default.php';
 include_once './variables.php'; //- для работы с нашими переменными
 
 //роутер - распределение между страницами, что мы будем подключать:
-//дальше подключаем странички - подключаем в html код в раздел <body></body>:
-include $_GET['page'].'.php';
+include '/modules/'.$_GET['module'].'/'.$_GET['page'].'.php';
+include '/skins/'.SKIN.'/index.tpl'; //главную страницу подключаем (используем переменную SKIN из config.php)
+//в index.tpl (это тут все от <!DOCTYPE html> до </html>)- подключаем в html код в раздел
 
-//задаем допустимые названия страниц:
-$allowed = ('main', 'contacts', 'aboutus', 'game1', 'program1');
+17-1-2 //index.tpl
+?>
+<title><?= echo @$title; ?></title> <!-- для вывода разного содержания для разных страниц с помощью контроллера будем доставать эти данные из базы данных-->
+<body>
+<?php
+include $_GET['module'].'/'.$_GET['page'].'.tpl';
+?>
+</body>
 
-if(!isset($_GET['page'])) {
-	$_GET['page'] = 'main';
-} elseif (!in_array($_GET['page'], $allowed)) {
-	// подключаем проверку из массива через отрицание(!)
-	header ("Location: /index.php?page=404"); //вывод информации, что страница отсутствует
-	exit ('Вы ввели недопустимые значения');
-}
-
-
-
-17-2 //страница с конфигурациями: config.php:
+<?php
+17-2-1 //страница с конфигурациями: config.php:
 //задаем настройки сайта (всего сайта, а не страницы) через константы:
 define('CREATED', 2013);
-define('NEWSONPAGE', 12); //12 новостей на странице
+define('SKIN', 'default'); //шаблон - default
+//define('NEWSONPAGE', 12); //12 новостей на странице
 //подключаем базу данных:
 define('DBLOGIN', 'inpost');
 define('DBPASS', '123');
 define('ADMINLOGIN', 'roman');
 define('ADMINPASS', '123123');
 //здесь будем хранить: соединения с базами данных, адресс нашего сайта и прочее
+
+17-2-1 // страница variables.php
+//задаем допустимые названия страниц, чтобы защититься от взлома:
+$allowed = ('main', 'contacts', 'aboutus', 'game1', 'program1');
+
+if(!isset($_GET['module'])) {
+$_GET['module'] = 'static'; //папка "modules/static/" c файлами: contacts.php и .tpl, main.php и .tpl,...
+} elseif (!in_array($_GET['module'], $allowed)) {
+// подключаем проверку из массива через отрицание(!)
+header ("Location: /index.php?module=404"); //вывод информации, что страница отсутствует
+exit ();
+}
+if (!isset($_GET['page'])) {
+$_GET['page'] = 'main';
+}
 
 17-3 // страница с конфигурациями: .htaccess
 AddDefaultCharset UTF-8
@@ -1862,19 +1876,64 @@ wtf($array,1);
 wtf($array2,1);
 wtf($array3); //тут 1 не прописали, значит false и функция остановилась
 
-17-6 //MVC - Models (набор функций, базовое ядро) View (Представление) Controllers (Обработка данных) - размещать их нужно в разных файлах.
+17-6 //MVC - Models (набор функций, базовое ядро) View (Вид, Представление) Controllers (Обработка данных) - размещать их нужно в разных файлах.
 //За вывод информации отвечает верстальщик и СЕОшник, он определяет что где и как выводить, а Controllers - это уже часть программиста
-//1-й вариант разделения:
-include $_GET['page'].'_controllers.php';
-include $_GET['page'].'_view.php';
-//2-й вариант разделения:
-include $_GET['page'].'_controllers.php';
-include $_GET['page'].'view.tpl'; // tpl  - изобрели для верстки
-//3-й вариант разделения - реже всего используется:
-include $_GET['page'].'_controllers.php';
-include $_GET['page'].'view.html'; // tpl  - изобрели для верстки
 
+//Controllers: отсутствует вывод на экран!
+
+//Models: в 99% случаев не выводим на экран информацию через echo!
+// используем return 'переменная или значения' возвращаем в контроллер и редко когда в представление
+
+//View: весь вывод информации на экран + частичное php (echo $var; циклы, htmlspecialchars, приведение к типам - echo(int)$var;)
+
+//1-й вариант разделения:
+include $_GET['page'].'_controllers.php'; // 'news_controller.php'
+include $_GET['page'].'_view.php'; //'news.view.php'
+//2-й вариант разделения:
+include $_GET['page'].'.php';
+include $_GET['page'].'.tpl'; // tpl - изобрели для верстки
+//3-й вариант разделения - реже всего используется:
+include $_GET['page'].'.php'; //'news.php'
+include $_GET['page'].'.html'; // 'news.html'
+
+//4-й вариант - мы будем использовать его - это 2-й вариант + разбивать по папкам:
+include '/modules/'.$_GET['page'].'.php';
+include '/modules/'.$_GET['page'].'.tpl';
+
+//примеры модулей:
+//all_news.php - показать все новости
+//view_news.php - просмотр одной новости в расширенном виде с комментариями пользователей сайта
+//search_news.php - поиск по новостям
+
+//но более понятно будет если называть по другому - первая часть - общая, дальше различия:
+//news_all.php
+//news_view.php
+//news_search.php
+//voting_all.php
+//voting_once.php
+//voting_last.php
+
+//если на сайте планируется очень много модулей, то тогда лучше группировать их по отдельным папкам:
+//news/all.php
+//news/view.php
+//news/search.php
+//voting/all.php
+//voting/once.php
+//voting/last.php
+
+//Примеры подразделов в папке модули: news, static, voting
+
+17-7 // skins и подпапка default - папка с шаблонами: index.tpl - в него перенести весь html код с index.php.
+include '/skins/default/index.tpl'; // это записать в index.php
+//И такую же запись продублировать в body файла index.tpl
+
+17-8-1 //404.php - создаем для ошибок отдельную папку 'modules/errors'( потом можно сюда добавить ошибки 403 и 500)
+header("HTTP/1.1 404 Not Found");
+
+17-8-2 // 404.tpl- создаем для ошибок отдельную папку 'skins/errors'
+"Данная страница отсутствует!"
 ?>
+
 
 
 
