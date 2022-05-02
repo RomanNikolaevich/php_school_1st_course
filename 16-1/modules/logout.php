@@ -1,5 +1,6 @@
 <?php
 unset ($_SESSION['access']);
+unset ($_SESSION['loginIsOk']);
 setcookie('access', 1, time() - 3600, '/');
 
 // Редирект на главную страницу

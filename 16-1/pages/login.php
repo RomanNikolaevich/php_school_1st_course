@@ -13,6 +13,9 @@
 				<button class="btn btn-suc" name="do_login" type="submit">Авторизоваться</button>
 			</form>
 			<br>
+			<h4 style="color:red"><?php if (isset($_SESSION['emailError'])) { echo $_SESSION['emailError'];} ?></h4>
+			<h4 style="color:red"><?php if (isset($_SESSION['loginError'])) { echo $_SESSION['loginError'];} ?></h4>
+			<h4 style="color:red"><?php if (isset($_SESSION['enterError'])) { echo $_SESSION['enterError'];} ?></h4>
 			<p>Если вы еще не зарегистрированы, тогда нажмите <a href="index.php?page=regin">здесь</a>.</p>
 			<p>Вернуться на <a href="<?php echo $_SERVER['PHP_SELF']; ?>">главную</a>.</p>
 		</div>

@@ -18,6 +18,7 @@
 	<?php if(!empty($_SESSION['access'])) { ?>
 		<div class="item"><a href="index.php?page=logout">logout</a></div>
 	<?php } ?>
+	<?php if (isset($_SESSION['loginIsOk'])) { echo $_SESSION['loginIsOk'];} ?>
 </nav>
 <div class="container-logo"><img src="img/logo.png" alt="logo">
 	<h2>THE BEST QUALITY PRODUCT</h2>
