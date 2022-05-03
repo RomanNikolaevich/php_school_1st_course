@@ -6,9 +6,9 @@ $passAdm = '123123';
 if(isset($_POST['do_login'])) {
 	if(!empty($_POST['email'])) {
 		if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-			$_SESSION['emailError'] = "Это не правильный почтовый адресс!";
+			$errorForm['emailError'] = "Это не правильный почтовый адресс!";
 		} else {
-			unset($_SESSION['emailError']);
+			$errorForm['loginError'] = "";
 		}
 	}
 }
@@ -16,9 +16,9 @@ if(isset($_POST['do_login'])) {
 if(isset($_POST['do_login'])) {
 	if(!empty($_POST['login'])) {
 		if (!preg_match("/^[a-zA-Z]*$/", $_POST['login'])) {
-			$_SESSION['loginError'] = "Допускаются только латинские буквы";
+			$errorForm['loginError'] = "Допускаются только латинские буквы";
 		} else {
-			unset($_SESSION['loginError']);
+			$errorForm['loginError'] = "";
 		}
 	}
 }
@@ -29,12 +29,12 @@ if(isset($_POST['login'], $_POST['email'], $_POST['password'], $_POST['do_login'
 		&& ($_POST['password'] === $passAdm)
 	) {
 		$_SESSION['access'] = 1;
-		$_SESSION['loginIsOk'] = 'welcome '.$_POST['login'];
-		unset($_SESSION['enterError']);
+		$errorForm['loginIsOk'] = 'welcome '.$_POST['login'];
+		$errorForm['enterError'] = "";
 		setcookie('access', 1, time() + 3600, '/');
 		header('Location: index.php');
 	} else {
-		$_SESSION['enterError'] = $_POST['login'].' не найден в базе данных. Введите правильные данные или пройдите регистрацию';
+		$errorForm['enterError'] = $_POST['login'].' не найден в базе данных. Введите правильные данные или пройдите регистрацию';
 	}
 }
 
