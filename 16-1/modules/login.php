@@ -15,8 +15,8 @@ if(isset($_POST['do_login'])) {
 
 if(isset($_POST['do_login'])) {
 	if(!empty($_POST['login'])) {
-		if (!preg_match("/^[a-zA-Z-' ]*$/", $_POST['login'])) {
-			$_SESSION['loginError'] = "Допускаются только латинские буквы и пробелы";
+		if (!preg_match("/^[a-zA-Z]*$/", $_POST['login'])) {
+			$_SESSION['loginError'] = "Допускаются только латинские буквы";
 		} else {
 			unset($_SESSION['loginError']);
 		}
