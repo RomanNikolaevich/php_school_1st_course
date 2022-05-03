@@ -2,7 +2,7 @@
 	<div class="conteiner-content-block">
 		<img src="img/page1_img_01.png" alt="">
 		<h3>
-			<font>PRODUCTS</font> AGRO
+			<span>PRODUCTS</span> AGRO
 		</h3>
 		<p>Koleacene anritma haseseralety. Cumaser kertyaseocis ntoquas caaslecenas stricies phaledatyfena nec
 			sit

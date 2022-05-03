@@ -2,7 +2,7 @@
 	<div class="conteiner-content-block">
 		<img src="img/page1_img_01.png" alt="">
 		<h3>
-			<font>OUR</font> CONTACTS
+			<span>OUR</span> CONTACTS
 		</h3>
 		<h2>Контакты</h2><br>
 		<p>г.Киев, бул.Шевченка, 18</p>

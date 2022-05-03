@@ -2,7 +2,7 @@
 	<div class="conteiner-content-block">
 		<img src="img/page1_img_01.png" alt="">
 		<h3>
-			<font>PROGRESSIVE</font> METHODS
+			<span>PROGRESSIVE</span> METHODS
 		</h3>
 		<p>Koleacene anritma haseseralety. Cumaser kertyaseocis ntoquas caaslecenas stricies phaledatyfena nec
 			sit
@@ -14,7 +14,7 @@
 	<div class="conteiner-content-block">
 		<img src="img/page1_img_02.png" alt="">
 		<h3>
-			<font>BEST</font> QUALTY PRODUCTS
+			<span>BEST</span> QUALTY PRODUCTS
 		</h3>
 		<p> Mastaes lausitma haseseralety.Cumaser kertyaseocis ntoquas caaslecenas stricies phaledatyfena nec
 			sit
@@ -26,7 +26,7 @@
 	<div class="conteiner-content-block">
 		<img src="img/page1_img_03.png" alt="">
 		<h3>
-			<font>100%</font> NATURAL & ORGANIC
+			<span>100%</span> NATURAL & ORGANIC
 		</h3>
 		<p>Jyuast asnritma masese ralensty.Cumaser kertyaseocis ntoquas caaslecenas stricies phaledatyfena nec
 			sit
@@ -41,12 +41,12 @@
 <div class="conteiner-content2">
 	<div class="conteiner-content-block2">
 		<h2>
-			<font>FEATURED</font> SERVICES
+			<span>FEATURED</span> SERVICES
 		</h2>
 	</div>
 	<div class="conteiner-content-block3">
 		<h2>
-			<font>COMPANY</font> DEVELOPMENT
+			<span>COMPANY</span> DEVELOPMENT
 		</h2>
 	</div>
 
