@@ -7,15 +7,11 @@ if(isset($_POST['login'], $_POST['email'], $_POST['password'], $_POST['do_login'
 	if(!empty($_POST['login'])) {
 		if (!preg_match("/^[a-zA-Z]*$/", $_POST['login'])) {
 			$errorForm['loginError'] = "В логине допускаются только латинские буквы";
-		} else {
-			$errorForm['loginError'] = "";
 		}
 	}
 	if(!empty($_POST['email'])) {
 		if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
 			$errorForm['emailError'] = "Почтовый адресс введен не верно!";
-		} else {
-			$errorForm['loginError'] = "";
 		}
 	}
 	if(($_POST['login'] === $loginAdm)
@@ -24,7 +20,6 @@ if(isset($_POST['login'], $_POST['email'], $_POST['password'], $_POST['do_login'
 	) {
 		$_SESSION['access'] = 1;
 		$_SESSION['login'] = $_POST['login'];
-		$errorForm['enterError'] = "";
 		setcookie('access', 1, time() + 3600, '/');
 		header('Location: index.php');
 	} else {
