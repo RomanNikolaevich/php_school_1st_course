@@ -13,16 +13,11 @@
 				<button class="btn btn-suc" name="do_login" type="submit">Авторизоваться</button>
 			</form>
 			<br>
-			<h4 style="color:red"><?php if (!empty($errorForm['emailError'])) { echo $errorForm['emailError'];} ?></h4>
 			<h4 style="color:red"><?php if (!empty($errorForm['loginError'])) { echo $errorForm['loginError'];} ?></h4>
+			<h4 style="color:red"><?php if (!empty($errorForm['emailError'])) { echo $errorForm['emailError'];} ?></h4>
 			<h4 style="color:red"><?php if (!empty($errorForm['enterError'])) { echo $errorForm['enterError'];} ?></h4>
 			<p>Если вы еще не зарегистрированы, тогда нажмите <a href="index.php?page=regin">здесь</a>.</p>
 			<p>Вернуться на <a href="<?php echo $_SERVER['PHP_SELF']; ?>">главную</a>.</p>
 		</div>
 	</div>
 </div>
-
-
-
-
-

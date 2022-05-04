@@ -10,15 +10,21 @@
 	<div class="item"><a href="index.php?page=products">products</a></div>
 	<div class="item"><a href="index.php?page=partners">partners</a></div>
 	<div class="item"><a href="index.php?page=contacts">contacts</a></div>
-	<?php if($adminVisability) {
+	<?php
+	if($adminVisability) {
 		if(empty($_SESSION['access'])) { ?>
 			<div class="item"><a href="index.php?page=login">login</a></div>
-		<?php }
+			<?php
+		} ?>
+		<?php
+		if(!empty($_SESSION['access'])) { ?>
+			<div class="item"><a href="index.php?page=logout">logout</a></div>
+			<?php
+			if(!empty($_SESSION['login'])) {
+				echo 'welcome '.$_SESSION['login'];
+			}
+		}
 	} ?>
-	<?php if(!empty($_SESSION['access'])) { ?>
-		<div class="item"><a href="index.php?page=logout">logout</a></div>
-	<?php } ?>
-	<?php if (isset($_SESSION['loginIsOk'])) { echo $_SESSION['loginIsOk'];} ?>
 </nav>
 <div class="container-logo"><img src="img/logo.png" alt="logo">
 	<h2>THE BEST QUALITY PRODUCT</h2>
