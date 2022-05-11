@@ -2300,7 +2300,21 @@ $query = 'SELECT * FROM users'; //Выбрать из БД
 //Отправим этот запрос через команду mysqli_query:
 mysqli_query ($link, $query);
 
-20.6 Экранирование символов:
+20.6 Перехват ошибок запросов к БД
+Если при внесении в БД мы допустим ошибку, то она не выведется на экран. Такая особенность БД. Например:
+$res = mysqli_query ($link, "SELECT * FROM `zzz`"); //вместо `users` указали неправильное название `zzz`
+var_damp($res); // выведет bool(false), потому что произошла ошибка - если нет ошибок функция возвращает true
+Перехват ошибки простой - вместо var_damp($res) пишем:
+if($res === false) {
+	echo 'Тут была ошибка: '.mysqli_error($link);
+	exit();
+}
+
+Второй вариант через die (более короткий):
+$res = mysqli_query ($link, "SELECT * FROM `zzz`") or die('Тут была ошибка: '.mysqli_error($link));
+Рекомендуется все запросы к БД выводить одним из этих способов.
+
+20.7 Экранирование символов:
 если хотим постиавить одинарную кавычку в коде нужно использовать экранирование (\) - обратная черта:
 echo '<h1>Te'xt</h1>' - без экранирования кавычка считает закрытие кода посреди текста,
 echo '<h1>Te\'xt</h1>' - так правильно (при выводе на экран \ не будет виден)
@@ -2323,24 +2337,28 @@ echo "<div style = \"text-decoration:underline;\" >";
 Там где кавычки не используем (числовые данные), то нужно использовать преобразование к типу:
 `age` = .(int)$age; //тоже защита
 
-20.7 Регистрация пользователя на сайте: // index.php?module=cab&page=registration ?>
+20.8 Регистрация пользователя на сайте: // index.php?module=cab&page=registration
+20.8.1 registrathion.tpl:?>
 <div style="padding:100px;">
-	<?php echo $errors; ?>
+	<?php echo if(!isset($_SESSION['regok'])) { ?>
 	<form action="" method="post">
 		<table>
 			<tr>
 				<td width="90">Логин *</td>
-				<td><input type="text" name="login"></td>
+				<td><input type="text" name="login"
+						   value="<?php echo @htmlspecialchars($_POST['login']); ?>"></td>
 				<td><?php if (isset($errors['login'])) {echo $errors['login'];} ?></td>
 			</tr>
 			<tr>
 				<td>Пароль *</td>
-				<td><input type="password" name="password"></td>
+				<td><input type="password" name="password"
+						   value="<?php echo @htmlspecialchars($_POST['password']); ?>"></td>
 				<td><?php @echo $errors['password']; ?></td> <!--короткая запись с глушилкой ошибок-->
 			</tr>
 			<tr>
 				<td>E-mail *</td>
-				<td><input type="email" name="email"></td>
+				<td><input type="email" name="email"
+						   value="<?php echo @htmlspecialchars($_POST['email']); ?>"></td>
 				<td><?php if (isset($errors['email'])) {echo $errors['email'];} ?></td>
 			</tr>
 			<tr>
@@ -2352,25 +2370,58 @@ echo "<div style = \"text-decoration:underline;\" >";
 		<p style="font-size:10px;">* - поле обязательное для заполнения</p>
 		<input type="submit" name="sending" value="Зарегистрироваться">
 	</form>
+	<?php } else { unset($_SESSION['regok']); ?>
+	<div>Вы успешно зарегистрировались на сайте!</div>
+	<?php } ?>
 </div>
 <?php
-//Вносим логику в registrathion.php:
-$errors = array ();
+20.8.2 //Вносим логику в registrathion.php:
 //обработка регистрации:
 if(isset($_POST['login'], $_POST['email'], $_POST['password'])) {
+	$errors = array ();
 	if(empty($_POST['login'])) {
 		$errors['login'] = 'Вы не заполнили логин';
 	}
+	if(empty($_POST['password'])) {
+		$errors['password'] = 'Вы не заполнили пароль';
+	}
+	if(empty($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+		$errors['email'] = 'Вы не заполнили email';
+	}
+	if(!count($errors)) {
+		mysqli_query($link, "
+		INSERT INTO `users` SET
+		`login` = '".mysqli_real_escape_string($link, $_POST['login'])."',
+		`password` = '".mysqli_real_escape_string($link, $_POST['password'])."',
+		`email` = '".mysqli_real_escape_string($link, $_POST['email'])."',
+		`age` = ".(int)$_POST['age'])."
+		") or exit(mysqli_error($link));
+	$_SESSION['regok'] = 'OK';
+	header("Location: /index.php?module=cab&page=registration");
+	exit();
+	//выполняем какие-то действия
+	}
 }
 
-if(isset($_POST['login']) && empty($_POST['login'])) { //
-	$errors ['login']= 'Вы не заполнили поле';
-}
+20.8.3 Чтобы данные из полей при неверном введении не вводить заново то в input добавляем следующее:
+value="<?php echo @$_POST['login']; ?>">
 
+20.8.4 XSS-inj - хакерский взлом логина(уязвимость полей форм):
+если ввести в поле логин надпись te<">text<b>text   "- в таком случае за края формы вылезет текст:
+texttext''> - значения из переменной $_POST будут выводиться на страницу.
+Чтобы этого не происходило добавляем в параметр value функцию htmlspecialchars:
+value="<?php echo @htmlspecialchars($_POST['login']); ?>"> //функция экранирует, подменяет одни символы другими
+С помощью этой функции мы не запрещаем использовать определенные символы, но они уже не ломают нам систему.
 
+20.8.5 Очистка данных: если человек успешно внес данные и получил надпись об успешной регистрации, нажмет F5
+(обновит страницу), то эта запись повторно внесется в БД и создаст дубликат.
+Для этого нужно сделать после регистрации переадресацию на другую страницу (можно и на эту же)
 
-
-
+20.9 Домашняя работа:
+Очень простое задание, по аналогии сделать страницу на подобии отзывов и туда добавить форму добавления
+комментариев. В свою очередь так же сделать обработку входящих данных. Кроме этого для textarea изучить
+функцию на PHP: nl2br.
+Необходимо делать вместе с домашкой к 21-ому уроку.
 
 
 
