@@ -2395,7 +2395,7 @@ if(isset($_POST['login'], $_POST['email'], $_POST['password'])) {
 		`password` = '".mysqli_real_escape_string($link, $_POST['password'])."',
 		`email` = '".mysqli_real_escape_string($link, $_POST['email'])."',
 		`age` = ".(int)$_POST['age'])."
-		") or exit(mysqli_error($link));
+		") or exit(mysqli_error($link)); //вывод ошибок БД
 	$_SESSION['regok'] = 'OK';
 	header("Location: /index.php?module=cab&page=registration");
 	exit();
@@ -2422,6 +2422,10 @@ value="<?php echo @htmlspecialchars($_POST['login']); ?>"> //функция эк
 комментариев. В свою очередь так же сделать обработку входящих данных. Кроме этого для textarea изучить
 функцию на PHP: nl2br.
 Необходимо делать вместе с домашкой к 21-ому уроку.
+
+ Дополнение к домашке: Создать безопасную форму регистрации пользователя и вывод всех зарегистрированных
+пользователей.  Не должно быть SQL-inj или XSS-inj. Перечень тестовых логинов без кавычек: "<b>inpost</b>",
+"O'Henr''y", "Vo&quot;va", "Правда 1%", "ОбычныйUserId#1","x&*5!@#$%^*&?"," \ \ YE / / ","%%%%","\\","////".
 
 
 
