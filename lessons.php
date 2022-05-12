@@ -2394,7 +2394,7 @@ if(isset($_POST['login'], $_POST['email'], $_POST['password'])) {
 		`login` = '".mysqli_real_escape_string($link, $_POST['login'])."',
 		`password` = '".mysqli_real_escape_string($link, $_POST['password'])."',
 		`email` = '".mysqli_real_escape_string($link, $_POST['email'])."',
-		`age` = ".(int)$_POST['age'])."
+		`age` = ".(int)$_POST['age']."
 		") or exit(mysqli_error($link)); //вывод ошибок БД
 	$_SESSION['regok'] = 'OK';
 	header("Location: /index.php?module=cab&page=registration");
