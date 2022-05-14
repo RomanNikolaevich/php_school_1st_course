@@ -2536,7 +2536,105 @@ value="<?php echo @htmlspecialchars($_POST['login']); ?>"> //функция эк
 /*План:
 PHP + MySQLi + SELECT*/
 
+21.1 Вывод массива на экран по элементно:
+Расмотрим БД в виде массива c подмассивами:
+$users = array(
+		1 => array (
+				'id' => 4,
+				'login' => 'inpost',
+				'password' => '123',
+				'email' => '123@mail.ru',
+				'age' => 27,
+		),
+		2 => array (
+				'id' => 5,
+				'login' => 'Vasya',
+				'password' => '234',
+				'email' => 'vasya3@mail.ru',
+				'age' => 20,
+		),
+		3 => array (
+				'id' => 10,
+				'login' => 'Petya',
+				'password' => 'qweqr',
+				'email' => 'petya@mail.ru',
+				'age' => 17,
+		),
+		4 => array (
+				'id' => 77,
+				'login' => 'Masha',
+				'password' => '1111',
+				'email' => '1111@mail.ru',
+				'age' => 18,
+		),
+		5 => array (
+				'id' => 150,
+				'login' => 'Dasha',
+				'password' => '0000',
+				'email' => 'dasha@mail.ru',
+				'age' => 18,
+		),
+);
+//Воспользуемся нашей функцией wtf из папки libs
+wtf($users); // выведется наш массив в виде 5 элементов
+//переберем массив циклом foreach, где $k = это наши ключи (1, 2, 3, 4, 5), $v = array (...) - массив
+//Сейчас попробуем распечатать каждый из этих массивов ($k):
+foreach($users as $k=>$v) {
+echo '<div>Запись №'.$k.'<br>';
+echo '<div>Идентификатор пользователя №'.$v['id'].'<br>';
+echo 'Имя пользователя: '.$v['login'].';<br>
+	Его возраст:'.$v['age'];
+//wtf($v, 1); //1 передаем, чтобы скрип не остановился.
+echo '</div>';
+}
+exit();
 
+21.2 Вытягиваем данные из БД - mysqli_fetch_assoc:
+//Сделаем выборку одной записи из таблицы users:
+$res = mysqli_query($link, "SELECT * FROM `users` ORDER BY `id` LIMIT 1") or exit(mysqli_error());
+$row = mysqli_fetch_assoc($res); //достаем из таблицы выбранную запись, помещает результат из $res в $row.
+//wtf($row); //проверочный ввывод на экран через функцию
+echo $row['login']; // напишет "Петя"
+exit();
+
+21.3 Получаем количество строк в наборе результатов - mysqli_num_rows:
+//Обращение к БД, которые выводят пустой результат, для этого осуществляем
+//поиск учетных записей с возратом пользователя больше 100 лет:
+$res = mysqli_query($link, "SELECT * FROM `users` WHERE `age` > 100") or exit(mysqli_error());
+echo mysqli_num_rows($res); //0 - функция подсчета количества выбранных выводов из таблицы
+
+//Проверка циклом вместо echo:
+$res = mysqli_query($link, "SELECT * FROM `users` ORDER BY `id` LIMIT 10") or exit(mysqli_error());
+if(mysqli_num_rows($res)){ //если больше нуля (true)
+	echo 'Всего'.mysqli_num_rows($res).' записей<br>';
+	while ($row = mysqli_fetch_assoc($res)) {// перебираем циклом все значения
+		echo '<div>Сушествует пользователей: '.htmlspesialchars($row['login']).'</div>';
+		//div добавляем чтобы каждый результат отображался с новой строчки
+	} // как только дойдем до 11 записи (у нас лимит 10 стоит) итерация завершится - 10 раз выведем все 10
+	// пользователей
+} else {
+	echo 'Нет записей по данному запросу';
+}
+exit();
+
+//Вывод списка всех пользователей на сайте:
+$res = mysqli_query($link, "SELECT * FROM `users` ORDER BY `id`") or exit(mysqli_error());
+if(mysqli_num_rows($res)){
+	echo 'Всего у нас на сайте'.mysqli_num_rows($res).' пользователей зарегистрировано<br>
+	А именно: <ul>
+	';
+	$i = 1;
+	while ($row = mysqli_fetch_assoc($res)) {
+		//if(++$i == 10) { //можно и так писать переменную через условие
+		echo '<li>'.(int)++$i.'. '.htmlspesialchars($row['login']).'</li>';
+		//++$i; - Переменная увеличивается на 1
+		//$i++ - Запоминается старое и новое значение до окончания действия, и в конце увеличивается!
+	}
+	echo '</ul>';
+} else {
+		echo 'Нет записей по данному запросу';
+}
+exit();
 
 
 
