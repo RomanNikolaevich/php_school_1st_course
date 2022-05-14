@@ -2608,7 +2608,7 @@ $res = mysqli_query($link, "SELECT * FROM `users` ORDER BY `id` LIMIT 10") or ex
 if(mysqli_num_rows($res)){ //если больше нуля (true)
 	echo 'Всего'.mysqli_num_rows($res).' записей<br>';
 	while ($row = mysqli_fetch_assoc($res)) {// перебираем циклом все значения
-		echo '<div>Сушествует пользователей: '.htmlspesialchars($row['login']).'</div>';
+		echo '<div>Сушествует пользователей: '.htmlspecialchars($row['login']).'</div>';
 		//div добавляем чтобы каждый результат отображался с новой строчки
 	} // как только дойдем до 11 записи (у нас лимит 10 стоит) итерация завершится - 10 раз выведем все 10
 	// пользователей
@@ -2626,7 +2626,7 @@ if(mysqli_num_rows($res)){
 	$i = 1;
 	while ($row = mysqli_fetch_assoc($res)) {
 		//if(++$i == 10) { //можно и так писать переменную через условие
-		echo '<li>'.(int)++$i.'. '.htmlspesialchars($row['login']).'</li>';
+		echo '<li>'.(int)++$i.'. '.htmlspecialchars($row['login']).'</li>';
 		//++$i; - Переменная увеличивается на 1
 		//$i++ - Запоминается старое и новое значение до окончания действия, и в конце увеличивается!
 	}
