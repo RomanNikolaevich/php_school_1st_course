@@ -2734,17 +2734,25 @@ $news = mysqli_query($link, "
 </div>
 <?php
 22.3.5.2 add.php: //Делаем проверку на существование постов и пишем наш код обработки:
-//Функция trim() - обрезает строку, удяляя лишние пробелы в начале и конце строки, в скобках после переменной можно
-// по желанию указать какие еще символы мы хотим удалить):
+Функция trim() - обрезает строку, удяляя лишние пробелы в начале и конце строки, в скобках после переменной можно
+по желанию указать какие еще символы мы хотим удалить.
+Есть три варианта использования trim():
+1) у условии if
+2) прогнать $_POST через trim() с помощью цикла foreach
+3) внутри функции mysqli_query
+Выбирается один из этих способов:
 if(isset($_POST['add'], $_POST['title'], $_POST['text']=trim($_POST['text']), $_POST['cat'], $_POST['discription'])) {
 	//echo 'Форма нормально отправилась'; //проверка - если все значения поста правильно записаны, то выведется
 	//exit(); //если все норм то стираем и пишем дальше
+		foreach($_POST as $k=>$v) {
+		$_POST[$k] = trim($v); // так мы все значения $_POST[''] обрезаем и не нужно каждое отдельно
+		}
 	mysqli_query($link, "
 		INSERT INTO `news` SET
-		`cat` 		  = '".mysqli_real_escape_string($link, $_POST['cat'])."', //запрос можно стилизировать пробелами
-		`title` 	  = '".mysqli_real_escape_string($link, $_POST['title'])."',
+		`cat` 		  = '".mysqli_real_escape_string($link, trim($_POST['cat']))."', //запрос можно стилизировать пробелами
+		`title` 	  = '".mysqli_real_escape_string($link, trim($_POST['title']))."',
 		`text` 		  = '".mysqli_real_escape_string($link, trim($_POST['text']))."', //trim можно и сюда вставить
-		`discription` = '".mysqli_real_escape_string($link, $_POST['discription'])."',
+		`discription` = '".mysqli_real_escape_string($link, trim($_POST['discription']))."',
 		`date`        = NOW() //ставит сегодняшнюю дату
 	") or exit(mysqli_error());
 	$_SESSION['info'] = 'Запись была добавлена'; //уведомление пользователя, что его новость была добавлена
