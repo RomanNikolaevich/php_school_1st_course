@@ -2745,20 +2745,35 @@ if(isset($_POST['add'], $_POST['title'], $_POST['text']=trim($_POST['text']), $_
 	//echo 'Форма нормально отправилась'; //проверка - если все значения поста правильно записаны, то выведется
 	//exit(); //если все норм то стираем и пишем дальше
 		foreach($_POST as $k=>$v) {
-		$_POST[$k] = trim($v); // так мы все значения $_POST[''] обрезаем и не нужно каждое отдельно
+		$_POST[$k] = mysqli_real_escape_string(trim($v)); //двумя функциями сразу пост прошлись
+	// так мы все значения $_POST[''] обрезаем и не нужно каждое отдельно
+	//если тут использовали mysqli_real_escape_string, то ниже можно не использовать, но Стас советует использовать
+// в mysqli_query, а не в цикле, чтобы видеть применили мы mysqli_real_escape_string или нет и случайно не пропустили
 		}
 	mysqli_query($link, "
 		INSERT INTO `news` SET
-		`cat` 		  = '".mysqli_real_escape_string($link, trim($_POST['cat']))."', //запрос можно стилизировать пробелами
+		//запрос можно стилизировать пробелами:
+		//trim можно и сюда вставить:
+		`cat` 		  = '".mysqli_real_escape_string($link, trim($_POST['cat']))."',
 		`title` 	  = '".mysqli_real_escape_string($link, trim($_POST['title']))."',
-		`text` 		  = '".mysqli_real_escape_string($link, trim($_POST['text']))."', //trim можно и сюда вставить
+		`text` 		  = '".mysqli_real_escape_string($link, trim($_POST['text']))."',
 		`discription` = '".mysqli_real_escape_string($link, trim($_POST['discription']))."',
-		`date`        = NOW() //ставит сегодняшнюю дату
+		`date`        = NOW() //ставит сегодняшнюю дату аналог настроке в MySQLi
 	") or exit(mysqli_error());
 	$_SESSION['info'] = 'Запись была добавлена'; //уведомление пользователя, что его новость была добавлена
 	header('Location: index.php?module=news'); //переадресацию на главную страничку на main
 	exit();
 }
+
+22.3.5.2.1 Этот цикл проверки можно вынести в variables.php, чтобы ее  каждый раз не писать:
+if(isset($_POST) && count($_POST)) {
+	foreach($_POST as $k=>$v) {
+	$_POST[$k] = mysqli_real_escape_string(trim($v));
+}
+
+Функция mysqli_real_escape_string() - экранирует кавычки и слеши.
+Входящие параметры: 1.ССылка на коннект, 2. Переменная, которую необходимо экранировать
+Выходящие параметры: экранный текст
 
 22.3.5.3 main.php:
 //делаем проверку если сессия
@@ -2776,4 +2791,5 @@ if (isset($info)) { ?> //вывело, что запись была добавл
 22.3.5.5 Теперь добавление новостей уже должно работать. Делаем проверку. Модуль добавления новостей готов.
 Осталось сделать модуль удалению и модуль редактирования новостей.
 
-01:04:06
+22.3.6 Удаление записей
+1:20:00
