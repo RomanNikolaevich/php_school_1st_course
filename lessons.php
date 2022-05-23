@@ -495,7 +495,28 @@ $tags = 'php mysql array variable';
 $tags_array = explode(' ', $tags); //преобразовываем набор слов в массив
 echo '<pre>';
 print_r($tags_array); // выдает на экран массивом эти данные
+?>
+<?php
+Урок 9: Начинаем изучать PHP
+/*План:
+Как устроен сервер
+Переменные
+Математические действия
+Вывод переменных
+Операторы и управляющие конструкции*/
 
+9.1 /*Трассировка пути к сайту:
+запуск/виконати/відкрити пишем:*/
+tracert phpforum.ru
+//так через просомтр пинга можно увидеть где на каком компе в цепочке есть задержка
+//Решение с проблемными серверами в пути - прокси-сервер - обход проблемного сервера
+//Об этом нужно сообщеть админам и хостинг провайдер заменяет путь
+
+9.2
+//server-side: PHP, Mysql
+//client-side: HTML, JS
+
+9.3 //Операторы сравнения: if, else
 
 // 10-й урок Урок 10: Практикуемся с версткой
 
@@ -1310,7 +1331,7 @@ $x = 10;
 Если данные переданы правильно, то выполнять какие-то действия, а если неправильно переданы, то нужно вернуть его
 обратно на нашу форму.*/
 
-14-10 // полный текст кода с проверкой авторизации:
+14-10  //полный текст кода с проверкой авторизации:
 if(isset($_POST['login'], $_POST['pass'])) {
 	echo $_POST['login'];
 	echo 'GET: <pre>'.print_r($_GET, 1).'</pre>';
@@ -1348,9 +1369,7 @@ if(isset($_POST['login'], $_POST['pass'])) {
 как в примере выше <?php } ?> -->
 
 <?php
-
-
-14-12 /*различия между $_GET и $_POST - работа с ними полностью аналогична, нужно только указывать так же
+14-12 Различия между $_GET и $_POST - работа с ними полностью аналогична, нужно только указывать так же
  метод принятия в форме <form action="" method="post">. Абсолютно аналогичное действие, за исключением маленьких
  деталей.
  POST - это наши скрытые данные, засекреченные, когда мы данные отправляем на нашу страничку они отправляются,
@@ -1369,7 +1388,7 @@ if(isset($_POST['login'], $_POST['pass'])) {
  https://www.google.com/search?q=%D1%87%D1%82%D0%BE+%D1%82%D0%B0%D0%BA%D0%BE%D0%B5+php&rlz=1C1SQJL_ruUA888UA888&oq=%D1%87%D1%82%D0%BE+%D1%82%D0%B0%D0%BA%D0%BE%D0%B5+php&aqs=chrome..69i57j0i512l6j69i61.4942j0j1&sourceid=chrome&ie=UTF-8
  это ссылка из гугля запроса "что такое php".
 5) GET - используется для навигации (использование ЧПУ, для SEO раскрутки)
-*/
+
 
 14-13 // Разбор домашки к уроку 13 и задание к 14 уроку:
 function calc($num1, $num2, $action='plus') {
@@ -2791,5 +2810,185 @@ if (isset($info)) { ?> //вывело, что запись была добавл
 22.3.5.5 Теперь добавление новостей уже должно работать. Делаем проверку. Модуль добавления новостей готов.
 Осталось сделать модуль удалению и модуль редактирования новостей.
 
-22.3.6 Удаление записей
-1:20:00
+22.4 Удаление записей (1:20:00)
+22.4.1 main.php:
+//Первый вариант удаления через цикл foreach после нажатия кнопки($_POST['delete']):
+if (isset($_POST['delete'])){
+//wtf($_POST['ids']); первоначальная проверка, что попадает в $_POST['ids'] - этот вариант не самый оптимальный
+//так как если отмеченно 3 checkbox, то в БД будет отправлено 3 запроса на удаление последовательно
+	foreach($_POST['ids'] as $k=>$v) {
+		mysqli_query($link,"
+		DELETE FROM `news`
+		WHERE `id` = ".(int)$v."
+	");
+	}
+}
+//Второй вариант - отправка запроса на удаление одним запросом:
+// Функция implode говорит, что мы по определенному символу, у нас запятая, объединяем массив и на выходе
+// получаем обычную строку. Вместо ',' можно использовать '</tr><tr>',чтобы получить колонки
+if (isset($_POST['delete'])){
+		//циклом прогоняем массив, чтобы привести его к типу число (int):
+		foreach($_POST['ids'] as $k=>$v) {
+		$_POST['ids'][$k]
+		= (int)$v;
+		}
+		//wtf($_POST['ids'],1); //выведет на экран массив
+		$ids = implode(',', $_POST['ids']);
+		//wtf($ids); // выведет на экран 3, 2, 1
+		mysqli_query($link,"
+			DELETE FROM `news`
+			WHERE `id` IN ".$ids."
+		") or exit(mysqli_error());
+}
+//Каждый отмеченый checkbox добавляет цифры в массив:
+//$_POST['ids'] = array(3,2,1);
+
+if(isset($_GET['action']) && $_GET['action']=='delete'){
+	mysqli_query($link,"
+		DELETE FROM `news`
+		WHERE `id` = ".(int)$_GET['id']."
+	") or exit(mysqli_error());
+	$_SESSION['info'] = 'Новости были удалены';
+	header("Location: /index.php?module=news");
+	exit();
+}
+
+
+22.4.2 main.tpl - теперь будет выглядеть так: ?>
+<div>
+	<?php if (isset($info)) { ?>
+		<h1><?php echo $info; ?></h1>
+    <?php } ?>
+
+<a href="/index.php?module=news&page=add">ДОБАВИТЬ НОВУЮ НОВОСТЬ</a>
+<br>
+Все существующие новости:
+	<form action="" method="post">
+		<?php while(?row=mysqli_fetch_assoc($news)) { ?>
+			<div>
+				<div><input type="checkbox" name="ids[]" value="<?php echo $row['id']; ?>">
+					<a href="/index.php?module=news&action=delete&id=<?php echo $row['id']; ?> ">УДАЛИТЬ</a>
+					<b><?php echo $row['title']; ?></b>
+					<span><?php echo $row['date']; ?></span>
+				</div>
+			</div>
+			<hr>
+		<?php } ?>
+		<input type="submit" name="delete" value="Удалить отмеченные записи">
+	</form>
+</div>
+
+<?php
+22.4.3 variables.php
+//временно закомментим - в последующих уроках ее немного изменим
+//обработка трима сделать в add.php
+/*if(isset($_POST) && count($_POST)) {
+    foreach ($_POST as $k => $v) {
+        $_POST[$k] = trim($v);
+    }
+}*/
+
+22.5 Редактирование новостей (01:44:03)
+22.5.1 main.tpl (добавим строчку радактирования новости)
+<div>
+<?php if (isset($info)) { ?>
+<h1><?php echo $info; ?></h1>
+<?php } ?>
+
+<a href="/index.php?module=news&page=add">ДОБАВИТЬ НОВУЮ НОВОСТЬ</a>
+<br>
+Все существующие новости:
+<form action="" method="post">
+    <?php while(?row=mysqli_fetch_assoc($news)) { ?>
+	<div>
+		<div><input type="checkbox" name="ids[]" value="<?php echo $row['id']; ?>">
+			<a href="/index.php?module=news&page=edit&id=<?php echo $row['id']; ?>">ОТРЕДАКТИРОВАТЬ</a>
+			<a href="/index.php?module=news&action=delete&id=<?php echo $row['id']; ?> ">УДАЛИТЬ</a>
+			<b><?php echo $row['title']; ?></b>
+			<span><?php echo $row['date']; ?></span>
+		</div>
+	</div>
+<hr>
+    <?php } ?>
+	<input type="submit" name="delete" value="Удалить отмеченные записи">
+</form>
+</div>
+
+<?php
+22.5.2 edit.php
+if(isset($_POST['ok'], $_POST['title'], $_POST['text'], $_POST['cat'], $_POST['discription'])) {
+	foreach($_POST as $k=>$v) {
+		$_POST[$k] = mysqli_real_escape_string(trim($v));
+	}
+	mysqli_query($link, "
+		UPDATE INTO `news` SET
+		//запрос можно стилизировать пробелами:
+		//trim можно и сюда вставить:
+		`cat` 		  = '".mysqli_real_escape_string($link, trim($_POST['cat']))."',
+		`title` 	  = '".mysqli_real_escape_string($link, trim($_POST['title']))."',
+		`text` 		  = '".mysqli_real_escape_string($link, trim($_POST['text']))."',
+		`discription` = '".mysqli_real_escape_string($link, trim($_POST['discription']))."',
+		`date`        = NOW() //если эту строчку убрать, то дата сменится на дату при редактировании
+		WHERE `id` = ".(int)$_GET['id']."
+	") or exit(mysqli_error());
+$_SESSION['info'] = 'Запись была изменена';
+header('Location: /index.php?module=news');
+exit();
+}
+
+$news = mysqli_query($link,"
+	SELECT *
+	FROM `news`
+	WHERE 	`id` = ".(int)$_GET['id']."
+	Limit 1
+	") or exit(mysqli_error());
+
+if(!mysqli_num_rows($news)) {
+	$_SESSION['info'] = 'Данной новости не существует!';
+	header("Location: /index.php?module=news");
+	exit();
+}
+
+$row = mysqli_fetch_assoc($news);
+//wtf($row); //видим нашу новости в виде массива
+
+if(isset($_POST['title'])) {
+	$row['title'] = $_POST['title'];
+}
+
+22.5.3 edit.tpl  (01:55:34)
+Тут у нас будет форма точно такая же как в add.tpl , только нужно добавить чтобы редактируемая новости подставилась
+в поля формы, чтобы было что редактировать ?>
+<div>
+	<form action="" method="post">
+		<input type="text" name="" value="">
+		<div>
+			Заголовок новости *: <input type="text" name="title" value="<?php echo htmlspecialchars($row['title']); ?>">
+		</div>
+		<div>
+			Категория новости: <input type="text" name="cat" value="<?php echo htmlspecialchars($row['cat']); ?>">
+		</div>
+		<div>
+			Описание новости:
+			<textarea name="discription"><?php echo htmlspecialchars($row['discription']); ?></textarea>
+		</div>
+		<div>
+			Полный текст новости:
+			<textarea name="text"><?php echo htmlspecialchars($row['text']); ?></textarea>
+		</div>
+		<input type="submit" name="ok" value="Редактировать  новость">
+
+	</form>
+</div>
+
+<?php
+22.6 Домашняя работа
+По такой же аналогии работают интернет магазины, где используется добавление, редактирование и удаление товаров.
+В домашней работе сделать по аналогии с новостями управление товарами. Нам необходима простая категория, тоже самое
+как выше указывали категорию, только сделать ее не через текст, не через инпут, а через <select>, то есть в <select>
+(способ выбора) будет указано какие варианты можно выбрать (либо холодильники, либо телевизоры).
+Нужно сделать раздел товары (goods)
+Подсказка по <select> - чтобы запомнить предыдущий выбор option в селекте мы пишем:
+<option selected="selected">
+дальше через if проверяем если в $row находится наш выбор, то пишем селектед=селектед, если нет - не пишем.
+Дальше по второму выбору если да, то все так же
